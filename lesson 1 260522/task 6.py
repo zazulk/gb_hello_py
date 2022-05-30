@@ -20,9 +20,7 @@ while km_per_day < km_max:
     else:
         km_per_day = km_per_day + km_per_day * 0.1
     day_numb += 1
-    is_visible_count = visible_count == "да" or visible_count == "Да" \
-                       or visible_count == "ДА"
-    if is_visible_count:
+    if visible_count == "да" or visible_count == "Да" or visible_count == "ДА":
         print(f"{day_numb}-й день: {km_per_day:.2f}")
 
 print(f"\nРезультат не менее {km_max}км будет достигнут на {day_numb}-й день.")

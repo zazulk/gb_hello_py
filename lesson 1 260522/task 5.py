@@ -19,7 +19,7 @@ elif profit < 0:
           "процессы.")
 else:
     # рентабельность
-    profitability = (profit / costs) * 100
+    profitability = profit / costs * 100
     staff_amount = int(input("Введите число сотрудников:"))
     profit_per_staff_member = profit / staff_amount
 
