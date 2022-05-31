@@ -3,7 +3,18 @@
 
 # Вариант 1: для конкретной задачи с 3мя слагаемыми
 
-user_number_inp = input("Назовите число: ")
-result = int(user_number_inp) + int(user_number_inp * 2) + int(
-    user_number_inp * 3)
-print(result)
+n = ""
+while not n:
+    n = input("Назовите число: ")
+    if int(n) < 0:
+        print(f"{'':>7}Отрицательные числа не принимаются. Сделаю {n} "
+              f"положительным.")
+        n = str(int(n) * -1)
+    if int(n) == 0:
+        print(f"{'':>7}❌ 0 не принимается.")
+        n = ""
+
+text = f"{n} + {n + n} + {n + n + n}"
+result = int(n) + int(n + n) + int(n + n + n)
+
+print(f"{text} = {result}")

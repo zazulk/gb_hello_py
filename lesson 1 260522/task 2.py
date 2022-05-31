@@ -7,6 +7,9 @@ secs_left = secs_inp % 3600
 mm = secs_left // 60
 secs_left = secs_left % 60
 ss = secs_left
-print(f"f-строкой: {hh // 10}{hh % 10}:{mm // 10}{mm % 10}:{ss // 10}{ss % 10}")
-print("с сепаратором: ", hh // 10, hh % 10, ":", mm // 10, mm % 10, ":",
-      ss // 10, ss % 10, sep="")
+
+print(f"некрасиво f-строкой: {hh // 10}{hh % 10}:{mm // 10}{mm % 10}:"
+      f"{ss // 10}{ss % 10}")
+print("некрасиво с сепаратором: ", hh // 10, hh % 10, ":", mm // 10, mm % 10,
+      ":", ss // 10, ss % 10, sep="")
+print(f"красиво f-строкой: {hh:02}:{mm:02}:{ss:02}")
