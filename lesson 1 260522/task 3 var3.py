@@ -8,34 +8,24 @@ print("Введите данные.")
 numb_inp = ""
 max_count = 0
 
-# в отличие от Варианта 2 дополнительно ставим continue в циклах ниже
-# мотивация: может так прозрачнее и если код потом дополнять еще условиями
-# или поменять условия местами, можно получить ошибку или цикл прекратится
-# раньше, чем нужно
-
 while not numb_inp:
     numb_inp = input(f"{'':>5}Число: ")
     if int(numb_inp) < 0:
         print(f"{'':>7}Отрицательные числа не принимаются. Сделаю {numb_inp} "
               f"положительным.")
         numb_inp = str(int(numb_inp) * -1)
-        break
     if int(numb_inp) == 0:
         print(f"{'':>7}❌ 0 не принимается.")
         numb_inp = ""
-        continue
 
 while not max_count:
     max_count = int(input(f"{'':>5}Количество слагаемых: "))
     if max_count == 0:
         print(f"{'':>7}❌ 0 не принимается.")
-        continue
     if max_count < 0:
         print(f"{'':>7}Отрицательные числа не принимаются. Сделаю {max_count} "
               f"положительным.")
         max_count *= -1
-        break
-
 
 # будем менять введенное строчное число
 numb_new = numb_inp
