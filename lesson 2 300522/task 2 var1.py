@@ -3,18 +3,23 @@
 # количестве элементов последний сохранить на своём месте. Для заполнения
 # списка элементов нужно использовать функцию input().
 
-inp = input("Скажите что-нибудь: ")
-list_inp = inp.split()
-if len(list_inp) == 1:
-    print("Этого мало.")
-    inp += " " + input("Еще что-нибудь скажите: ")
-    list_inp = inp.split()
 
-for k in range(len(list_inp)):
-    if (k+1) % 2 == 0:
-        print(f"k = {k}")
-        actual = list_inp[k]
-        last = list_inp[k-1]
-        list_inp[k-1], list_inp[k] = actual, last
+inp = input("Скажите что-нибудь: ").strip()
 
-print(" ".join(list_inp))
+while len(inp) <= 1:
+    if len(inp) == 0:
+        inp = input("Скажите что-нибудь: ")
+    if len(inp) == 1:
+        print("⚠️ Этого мало.")
+        inp += " " + input("Еще что-нибудь скажите: ")
+
+words = inp.strip().split()
+
+for ind in range(len(words)):
+    if (ind + 1) % 2 == 0:
+        actual = words[ind]
+        last = words[ind-1]
+        words[ind-1], words[ind] = actual, last
+
+print("Результат перестановки слов:")
+print(" ".join(words))
