@@ -39,8 +39,6 @@ while i <= max_count:
         text += " + " + numb_inp * i
     result += int(numb_inp * i)
     i += 1
-    print(f'i = {i}')
-
 
 if text:
     print(f"{text} = {result}")
