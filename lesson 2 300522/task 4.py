@@ -9,10 +9,16 @@ print("Буду выводить нумерованный список слов.
 words = []
 phrase = ""
 punctuations = [",", ".", "!", ":", "–", "?", ";"]
+stop_words = ["q", "й", "стоп", "stop", "cnjg", "флюгегехаймен"]
+stop = False
 
-while len(words) <= 1:
+while len(words) <= 1 and not stop:
+    if phrase in stop_words:
+        print("Ну и ладно :(")
+        stop = True
+        break
     if len(words) == 0:
-        phrase = input("Скажите какую-нибудь фразу: ")
+        phrase = input("Скажите какую-нибудь фразу или введите 'Q' для выхода: ")
     if len(words) == 1:
         print("⚠️ Этого мало.")
         phrase += " " + input("Еще что-нибудь скажите: ")
@@ -20,8 +26,9 @@ while len(words) <= 1:
         phrase = phrase.replace(mark, " ")
     words = phrase.split()
 
-print("\nРезультат:")
-words = phrase.split()
-for ind, word in enumerate(words, 1):
-    print(ind, word[:10])
+if not stop:
+    print("\nРезультат:")
+    words = phrase.split()
+    for ind, word in enumerate(words, 1):
+        print(f"{ind}. {word[:10]}")
 
