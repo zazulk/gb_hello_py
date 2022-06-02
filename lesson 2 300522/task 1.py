@@ -15,6 +15,7 @@ dict_ex = {"user": "Вася", "age": 24}
 byte_ex = b'text'
 bytearray_ex = bytearray(b"some text")
 mixed_list = [str_ex, int_ex, float_ex, complex_ex, bool_ex, list_ex, tuple_ex,
-              set_ex, dict_ex, None, byte_ex, bytearray_ex]
+              set_ex, frozenset(), dict_ex, None, byte_ex, bytearray_ex,
+              ValueError]
 for ind, item in enumerate(mixed_list):
-    print(ind, type(item))
+    print(f"[{ind}] {type(item)} --> {item}")
