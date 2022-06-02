@@ -2,12 +2,11 @@
 # к какому времени года относится месяц (зима, весна, лето, осень). Напишите
 # решения через list и dict.
 
-numb_inp = 0
-while numb_inp not in range(1, 13):
-    numb_inp = int(input("Введите число от 1 до 12: "))
-    if numb_inp not in range(1, 13):
-        print(f"{numb_inp:>5} не входит в промежуток между 1 и 12.")
-
+stop_words = ["q", "й", "стоп", "stop", "cnjg", "флюгегехаймен"]
+stop = False
+numb_inp = ''
+valid_numbs = str(list(range(1, 13))).replace(",", "").replace("[", "").replace(
+        "]", "").split()
 seasons = {
     "зима": {
         12: 'декабрь',
@@ -30,17 +29,35 @@ seasons = {
         11: 'декабрь',
     },
 }
-month_name = ""
-season_name = ""
 
-for season in seasons:
-    val = seasons.get(season)
-    month_name = val.get(numb_inp)
-    if month_name:
-        season_name = season
+# Пытаем пользователя, чтобы ввел валидные данные
+while numb_inp not in valid_numbs:
+    numb_inp = input("Введите число от 1 до 12 или 'Q' для выхода: ").strip()
+    if numb_inp in stop_words:
+        print(f"{'':>5}Ну и ладно :(")
+        stop = True
         break
+    if numb_inp == "":
+        continue
+    if not numb_inp.isdigit():
+        print(f"{'⚠️':>5} Это даже не число :(")
+        continue
+    if int(numb_inp) not in range(1, 13):
+        print(f"{'⚠️':>5}️ {numb_inp} не входит в промежуток между 1 и 12.")
 
-if not month_name:
-    print(f"Не нашел {numb_inp}-й месяц.")
-else:
-    print(f"{numb_inp}-й месяц это {month_name}, {season_name}.")
+if not stop:
+    numb_inp = int(numb_inp)
+    month_name = ""
+    season_name = ""
+
+    for season in seasons:
+        val = seasons.get(season)
+        month_name = val.get(numb_inp)
+        if month_name:
+            season_name = season
+            break
+
+    if not month_name:
+        print(f"Не нашел {numb_inp}-й месяц.")
+    else:
+        print(f"{numb_inp}-й месяц это {month_name}, {season_name}.")
