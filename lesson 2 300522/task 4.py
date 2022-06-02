@@ -23,5 +23,5 @@ while len(words) <= 1:
 print("\nРезультат:")
 words = phrase.split()
 for ind, word in enumerate(words, 1):
-    print(ind, word[:11])
+    print(ind, word[:10])
 
