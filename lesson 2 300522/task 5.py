@@ -4,26 +4,79 @@
 # значениями, то новый элемент с тем же значением должен разместиться после
 # них.
 
-rating = list(range(1, 11))
-rating.reverse()
-print(rating)
+rating = []
+full_rating = list(range(1, 11))
+full_rating.reverse()
 
-print("Вводите натуральные числа, а я буду добавлять их в свой рейтинг.")
+variants = [
+    [7, 4],
+    [5],
+    [9, 6, 1],
+    full_rating,
+]
+stop_words = ["стоп", "stop", "cnjg", "флюгегехаймен"]
 stop = False
+
+print("Варианты рейтинга для тестирования:")
+for num, elem in enumerate(variants, 1):
+    print(num, elem)
+
+choice_inp = input("Назовите номер варианта из списка:")
+choice_int = 0
+try_count = 0
+var_int_list = list(range(1, len(variants)))
+var_numbers = str(var_int_list).replace(",", "").replace("[", "").replace(
+        "]", "").split()
+while choice_inp not in var_numbers:
+    try_count += 1
+    if choice_inp in stop_words:
+        stop = True
+        print("Ну и ладно.")
+    elif try_count > 2:
+        print("Ну и ладно. Сам выбрал.")
+        choice_int = len(variants)
+        break
+    else:
+        choice_inp = input("Я настаиваю. Номер варианта из списка:")
+
+choice_int = choice_int if choice_int else int(choice_inp)
+rating = variants[choice_int - 1]
+print(f"{'Ваш' if try_count <= 2 else 'Мой'} выбор: {rating}")
+print("Вводите натуральные числа, а я буду добавлять их в свой рейтинг.")
 
 while not stop:
     new_item = input(f"{'':>5}Число или \"стоп\": ")
-    if new_item.lower() in ["стоп", "stop"]:
+    if new_item.lower() in stop_words:
         stop = True
         print("Закончили.")
     else:
         new_item = int(new_item)
         for item in rating:
-            if item == new_item and rating[rating.index(item) + 1] != new_item:
-                rating.insert(rating.index(item) + 1, new_item)
+            ind_max = len(rating) - 1
+            ind = rating.index(item)
+            # если число больше элемента в тек итерации,
+            # ставим его по индексу этого элемента
+            if new_item > item:
+                rating.insert(ind, new_item)
                 break
-            elif new_item > item:
-                rating.insert(rating.index(item) - 1, new_item)
+            # если число равно элементу в тек итерации
+            elif item == new_item:
+                # если это последняя итерация, вставляем число в конец
+                if ind == ind_max:
+                    rating.append(new_item)
+                # если следующий элемент не равен текущему,
+                # вставляем число на следующую позицию
+                elif rating[ind + 1] != new_item:
+                    rating.insert(ind + 1, new_item)
+                else:
+                    continue
+            # если это последняя итерация, то ничего не остается
+            # как поставить число в конец
+            elif ind == ind_max:
+                rating.append(new_item)
                 break
+            else:
+                continue
+
         print(f"Новое состояние рейтинга: {rating}")
 
