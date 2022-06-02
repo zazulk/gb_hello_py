@@ -48,7 +48,7 @@ while not stop:
     new_item = input(f"{'':>5}Число или \"Q\" (для выхода): ")
     if new_item.lower() in stop_words:
         stop = True
-        print("Закончили.")
+        print("🏁 Закончили.")
     else:
         rating.append(int(new_item))
         rating.sort(reverse=True)
