@@ -12,6 +12,7 @@ while len(inp) <= 1:
     if inp in stop_words:
         print("Ну и ладно :(")
         stop = True
+        break
     if len(inp) == 0:
         inp = input("Скажите что-нибудь или введите 'Q' для выхода: ")
     if len(inp) == 1:
