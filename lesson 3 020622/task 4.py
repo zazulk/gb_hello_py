@@ -22,7 +22,7 @@ n2 = 0
 inp = ""
 
 print("Будем возводить положительное число в отрицательную степень.")
-while not n1 and not n2:
+while not n1 or not n2:
     if not n1:
         inp = input("Введите действительное положительное число или "
                     "'Q' для выхода: ").replace(",", ".").strip()
@@ -56,9 +56,11 @@ while not n1 and not n2:
 
 if not stop:
     result = my_func(n1, n2)
-    round_res = round(result, 3)
+    round_res = result and round(result, 3)
 
-    if round_res == result:
+    if result and round_res == result:
         print(f"\n{n1} в степени {n2} = {result}")
+    elif not result:
+        print("Что-то пошло не так...")
     else:
         print(f"\n{n1} в степени {n2} (округлил) = {round_res}")
