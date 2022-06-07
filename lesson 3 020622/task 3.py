@@ -20,21 +20,25 @@ stop_words = ["q", "й", "стоп", "stop", "cnjg", "флюгегехаймен
 stop = False
 try:
     numbs = []
-    while len(numbs) != 3 and not stop:
+    while len(numbs) != 3:
         inp = input("Нужно ввести ТРИ разных числа через пробел или "
                     "'Q' для выхода: ").replace(",", ".")
         if inp in stop_words:
             print("Ну и ладно :(")
             stop = True
             break
-        numbs = list(map(float, inp.split()))
-        numbs.sort()
-        numbs_unique = list(set(numbs))
-        numbs_unique.sort()
-        if numbs != numbs_unique:
+        if not all([y.isdigit() for y in inp.replace('-', '').replace(
+                '.', '').split()]):
+            print("⚠️ В вводе есть не только цифры и разделитель для "
+                  "дробных чисел.")
+            numbs = []
+            continue
+        numbs = inp.split()
+        if len(numbs) != len(set(numbs)):
             print(f"{'⚠️':>5}️ Несколько чисел совпадают.")
             numbs = []
     if not stop:
+        numbs = list(map(float, numbs))
         result = my_func(numbs[0], numbs[1], numbs[2])
         if result:
             text_sum = ' + '.join(map(str, result['numbs']))
