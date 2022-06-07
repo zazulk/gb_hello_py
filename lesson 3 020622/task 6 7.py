@@ -15,53 +15,39 @@ def int_func(token):
     :param str token: Слово.
     :return str: Слово с прописной первой буквой.
     """
-    if type(token) is not str:
+    latin_small_chars = 'qwertyuiopasdfghjklzxcvbnm'
+    if type(token) is not str or set(token).difference(latin_small_chars):
         return ""
     return token.capitalize()
-
-
-def capitalize_every_word(text):
-    """Возвращает текст, сделав большой каждую первую букву в каждом слове.
-
-    :param str text: текст
-    :return str: измененный текст
-    """
-    if type(text) is not str:
-        return ""
-    return " ".join(map(int_func, text.split()))
-
-
-def has_nonlatin_or_upper_symbs(text):
-    """Проверяет, что в тексте есть не только маленькие латинские буквы
-
-    :param str text: текст
-    :return bool:
-    """
-    letters = list("abcdefghijklmnopqrstuwyxz")
-    for char in text:
-        if char not in letters and char != " ":
-            return True
-    return False
 
 
 stop_words = ["q", "й", "стоп", "stop", "cnjg", "флюгегехаймен"]
 stop = False
 inp = ""
+result = ""
 
 print("Сделаю все слова в вашей фразе с большой буквы.")
 while not inp:
     inp = input("Введите слова, состоящие из маленьких латинских букв, "
                 "или 'Q' для выхода: ").strip()
+    if not inp:
+        continue
     if inp in stop_words:
         print("Ну и ладно :(")
         stop = True
         break
-    if has_nonlatin_or_upper_symbs(inp):
-        print(
-            f"{'⚠️':>8}Слова должны состоять исключительно из маленьких "
-            f"латинских букв.")
-        inp = ""
-        continue
+    words = inp.split()
+    for w in words:
+        cap_w = int_func(w)
+        if not cap_w:
+            print(
+                f"{'⚠️':>8} Слова должны состоять исключительно из маленьких "
+                f"латинских букв.")
+            inp = ""
+            result = ""
+            break
+        else:
+            result += f" {cap_w}"
 
 if not stop:
-    print(f"🏁 Результат: {capitalize_every_word(inp)}")
+    print(f"🏁 Результат: {result}")
