@@ -31,21 +31,16 @@ print("Вводите числа, разделенные пробелом, а я
 while not stop:
     inp_words = input("Введите строку чисел, разделённых пробелом: ").replace(
         ",", ".").split()
-    inp_words_before_stop = get_numbs_before_stop(inp_words)
-    # print(f'🌀inp = {inp}')
-    # print(f'🌀🌀inp_before_stop = {inp_before_stop}')
+    try:
+        inp_words_before_stop = get_numbs_before_stop(inp_words)
+        stop = inp_words != inp_words_before_stop
+        numbs = list(map(float, inp_words_before_stop))
+        res_sum += sum(numbs)
+        round_sum = round(res_sum, 3)
+        if round_sum == res_sum:
+            print(f"{'🏁' if stop else ''} Сумма = {res_sum}")
+        else:
+            print(f"{'🏁' if stop else ''} Сумма (округлил) = {round_sum}")
 
-    stop = inp_words != inp_words_before_stop
-    # print(f'❗️stop = {stop}')
-    numbs = list(map(float, get_numbs_before_stop(inp_words)))
-    # print(f"🧽res_sum = {res_sum}")
-    # print(f"🛑sum(numbs) = {sum(numbs)}")
-
-    res_sum += sum(numbs)
-    # print(f"🧽🧽res_sum = {res_sum}")
-    round_sum = round(res_sum, 3)
-
-    if round_sum == res_sum:
-        print(f"{'🏁' if stop else ''} Сумма = {res_sum}")
-    else:
-        print(f"{'🏁' if stop else ''} Сумма (округлил) = {round_sum}")
+    except Exception:
+        print("Для выхода нужно ввести 'Q'")
