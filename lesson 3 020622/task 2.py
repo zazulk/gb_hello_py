@@ -54,13 +54,10 @@ def has_letters(text):
     :return bool:
     """
     if type(text) is not str:
-        # print("🎃🎃")
         return False
     letters = list("abcdefghijklmnopqrstuwyxzабвгдеёжзийклмнопрстуфхцчэюяъь")
     for letter in list(text):
-        # print(f"🎃list(text) = {list(text)}")
         if letter in letters:
-            # print("🎃")
             return True
     return False
 
@@ -72,14 +69,11 @@ def has_punctuations(text):
     :return bool:
     """
     if type(text) is not str:
-        # print("🧽🧽")
         return False
     punctuations = [",", ".", "!", ":", "?", ";", "\\", "/", "(", ")",
                     "{", "}", "[", "]"]
     for letter in list(text):
-        # print(f"🧽list(text) = {list(text)}")
         if letter in punctuations:
-            # print("🧽")
             return True
     return False
 
@@ -165,8 +159,11 @@ sample = {
         "validator": lambda val: val.count("@") == 1 and
                                  val.index("@") not in [0, -1] and
                                  val.count(".") == 1 and
-                                 val.index(".") > val.index("@"),
-        "err_msg": "Email должен быть в формате user@hostname.domain"
+                                 val.index(".") > val.index("@") and
+                                 len(set.intersection(
+                                     set("абвгдеёжзийклмнопрстуфхцчэюяъь"),
+                                     set(val))) == 0,
+        "err_msg": "Email должен быть в формате user@hostname.domain."
     },
     "моб. телефон": {
         "value": "",
@@ -179,36 +176,23 @@ sample = {
 }
 vals = []
 inp = ''
-i = 0
 user_info = {}
 for el in sample:
     user_info[el] = ""
 
 user_params = user_info.keys()
-# print(f"✏️ user_info = {user_info}")
-
-# print(f"✏️️ user_params = {user_params}")
 
 print("Вводите данные или 'Q' для выхода.")
-while has_empty_values(user_info) and not stop:
-    # print(f"🔹")
-    # print(f"has_empty_values = {has_empty_values(user_info)}")
+while has_empty_values(user_info):
     for param in user_params:
-        # print(f"🟢 {user_info[param]}")
-        i += 1
         while not inp:
-            # print("🔆")
             inp = remove_end_punctuations(input(f"{param:>8}: "))
+            if not inp:
+                continue
             if "normalizer" in sample[param]:
                 inp = sample[param].get("normalizer")(inp)
-                # print(f"❕️ inp = {inp}")
-                # print(f"❕️ {type(inp)}")
             if "validator" in sample[param]:
                 is_valid = sample[param].get("validator")(inp)
-                # print(f"❗️ is_valid = {is_valid}")
-                # print(f"❗️has_letters = {has_letters(inp)}")
-                # print(f"❗has_punctuations = {has_punctuations(inp)}")
-
                 if not is_valid:
                     spec_msg = sample[param].get("err_msg")
                     print(
@@ -219,16 +203,11 @@ while has_empty_values(user_info) and not stop:
             stop = True
             break
         else:
-            # print(f"💠inp = {inp}")
             vals.append(inp)
             inp = ''
-    # print(f"❗️{vals}")
     if not stop:
         user_info = get_user_info(name=vals[0], surname=vals[1], year=vals[2],
                                   city=vals[3], email=vals[4], phone=vals[5])
-    # print(f"❗❗️{user_info}")
-    if i > 10:
-        break
 
 if not stop:
     print("." * 30)
