@@ -6,6 +6,7 @@
 
 from my_funcs import is_stop
 
+
 def fact(num):
     """Генератор списка чисел от одного до переданного
 
@@ -24,7 +25,6 @@ while not numb_inp:
     if numb_inp == "":
         continue
     if is_stop(numb_inp):
-        stop = True
         break
     if not numb_inp.isdigit():
         print(f"{'⚠️':>5} Некорректное число.")
