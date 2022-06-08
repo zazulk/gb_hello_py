@@ -5,11 +5,13 @@
 # начиная с 1! и до n!.
 
 from my_funcs import is_stop
-from my_funcs import is_float_numb
-from my_funcs import is_numb_str
-
 
 def fact(num):
+    """Генератор списка чисел от одного до переданного
+
+    :param int num: число
+    :rtype generator:
+    """
     for elem in range(1, num + 1):
         yield elem
 
@@ -24,7 +26,7 @@ while not numb_inp:
     if is_stop(numb_inp):
         stop = True
         break
-    if is_float_numb(numb_inp) or not is_numb_str(numb_inp):
+    if not numb_inp.isdigit():
         print(f"{'⚠️':>5} Некорректное число.")
         continue
     n = int(numb_inp)
