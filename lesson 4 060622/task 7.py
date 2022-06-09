@@ -11,7 +11,7 @@ def fact(num):
     """Генератор списка чисел от одного до переданного
 
     :param int num: число
-    :rtype generator:
+    :rtype: generator
     """
     for elem in range(1, num + 1):
         yield elem
