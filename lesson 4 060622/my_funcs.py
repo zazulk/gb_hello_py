@@ -77,6 +77,7 @@ def get_numb_from_user(question, try_limit=None, rand_n_min=None,
 
         numb_inp = input(f"{question} ").replace(",", ".").strip()
         if numb_inp == "":
+            try_count += 1
             continue
         if is_stop(numb_inp):
             print("Ну и ладно :(")
@@ -88,7 +89,7 @@ def get_numb_from_user(question, try_limit=None, rand_n_min=None,
                 res_n = float(numb_inp)
             is_error = False
         except Exception as err:
-            print(f"❌ err = {err}")
+            # print(f"❌ err = {err}")
             is_error = True
         if is_error or (positive and not negative and res_n < 0) or \
                 (not is_with_zero and res_n == 0):
@@ -98,5 +99,6 @@ def get_numb_from_user(question, try_limit=None, rand_n_min=None,
                 f" числа.")
             numb_inp = ""
             res_n = None
+            try_count += 1
             continue
     return res_n
