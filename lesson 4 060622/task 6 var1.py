@@ -2,6 +2,8 @@
 # ● итератор, генерирующий целые числа, начиная с указанного;
 # ● итератор, повторяющий элементы некоторого списка, определённого заранее.
 
+# Вариант 1: с break
+
 from itertools import count
 from itertools import cycle
 from itertools import islice
@@ -61,13 +63,13 @@ if not stop:
                   f"отрицательным.")
             continue
 
-    for rand_n in count(start_n):
-        result.append(rand_n)
-        print(f"{'':>5}{rand_n}")
+    for item in count(start_n):
+        result.append(item)
+        print(f"{'':>5}{item}")
         if len(result) == max_count:
             break
 
-    print(f"\n✅ Итого: {', '.join(map(str, list(islice(count(start_n), 10))))}")
+    print(f"\n✅ Итого: {', '.join(map(str, list(islice(count(start_n), max_count))))}")
 
 print("*" * 30)
 
