@@ -59,6 +59,7 @@ def get_numb_from_user(question, try_limit=None, rand_n_min=None,
 
     kind_adj_pl = "дробные" if kind_of_numb == "float" else "целые"
     try_count = 0
+    is_err, is_val_err = False, False
 
     while not numb_inp:
         if try_limit and try_count >= try_limit:
@@ -72,7 +73,7 @@ def get_numb_from_user(question, try_limit=None, rand_n_min=None,
                     res_n = random.randint(rand_n_min, rand_n_max)
                 else:
                     res_n = random.randint(5, 15)
-            print(f"{'':>5}Так, ладно, сам выберу. Выбрал {res_n}.")
+            print(f"\tТак, ладно, сам выберу. Выбрал {res_n}.")
             break
 
         numb_inp = input(f"{question} ").replace(",", ".").strip()
@@ -87,16 +88,20 @@ def get_numb_from_user(question, try_limit=None, rand_n_min=None,
                 res_n = int(numb_inp)
             if kind_of_numb == "float":
                 res_n = float(numb_inp)
-            is_error = False
+            is_err = False
+        except ValueError:
+            is_val_err = True
         except Exception as err:
-            # print(f"❌ err = {err}")
-            is_error = True
-        if is_error or (positive and not negative and res_n < 0) or \
-                (not is_with_zero and res_n == 0):
-            print(
-                f"{'⚠️':>8} Нужно вводить {kind_adj_pl}"
-                f"{(' ' + pos_or_neg_adj_pl) if pos_or_neg_adj_pl else ''}"
-                f" числа.")
+            is_err = True
+        if is_err or is_val_err or (positive and not negative and res_n < 0)\
+                or (not is_with_zero and res_n == 0):
+            if is_err:
+                print("\t❌ Что-то пошло очень не так...")
+            else:
+                print(
+                    f"\t⚠️ Нужно вводить {kind_adj_pl}"
+                    f"{(' ' + pos_or_neg_adj_pl) if pos_or_neg_adj_pl else ''}"
+                    f" числа.")
             numb_inp = ""
             res_n = None
             try_count += 1

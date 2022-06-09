@@ -7,7 +7,7 @@ from random import sample
 
 numbs = list(map(abs, sample(range(-8, 8), 10)))
 print("Я выбрал такой список чисел:")
-print(f"{'':>8}{numbs}")
+print(f"\t{numbs}")
 result = [n for n in numbs if numbs.count(n) == 1]
 print("Элементы этого списка, не имеющие повторений:")
-print(f"{'':>8}{result}")
+print(f"\t{result}")

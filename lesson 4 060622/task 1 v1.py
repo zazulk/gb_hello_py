@@ -5,9 +5,15 @@
 
 from sys import argv
 
-n_1, n_2, n_3 = argv[1:]
 
-try:
-    print(f"Зарплата сотрудника = {float(n_1) * float(n_2) + float(n_3)}")
-except Exception as err:
-    print(f"Что-то пошло не так. Ошибка: {err}")
+def salary():
+    try:
+        n_1, n_2, n_3 = argv[1:]
+        print(f"Зарплата сотрудника = {float(n_1) * float(n_2) + float(n_3)}")
+    except ValueError:
+        print("❌ Введены некорректные данные.")
+    except Exception as err:
+        print(f"Что-то пошло не так. Ошибка: {err}")
+
+
+salary()

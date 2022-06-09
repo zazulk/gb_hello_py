@@ -4,8 +4,6 @@
 # списка.
 from functools import reduce
 
-numbs = [n for n in range(100, 1001) if n % 2 == 0]
-# print(f"Чётные числа от 100 до 1000 (включая границы):")
-# print(f"{'':>5}{numbs}")
+numbs = [n for n in range(100, 1001, 2)]
 result = reduce((lambda a, b: a * b), numbs)
 print(f"Произведение всех чётных чисел от 100 до 1000: {result}")

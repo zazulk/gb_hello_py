@@ -5,6 +5,7 @@
 # начиная с 1! и до n!.
 
 from my_funcs import is_stop
+from my_funcs import get_numb_from_user
 
 
 def fact(num):
@@ -13,27 +14,19 @@ def fact(num):
     :param int num: число
     :rtype: generator
     """
-    for elem in range(1, num + 1):
-        yield elem
+    res = 1
+    start = 0
+    if num == 0:
+        start = 0
+    for i in range(start, num + 1):
+        yield f'{i}! = {res}'
+        res *= i + 1
 
 
-numb_inp = ""
-n = 0
+quest = "Введите целое число или 'Q' для выхода:"
+n = get_numb_from_user(quest, kind_of_numb="int", positive=True, negative=True)
 
-while not numb_inp:
-    numb_inp = input(f"Введите целое число или 'Q' для выхода: ").strip()
-    if numb_inp == "":
-        continue
-    if is_stop(numb_inp):
-        break
-    if not numb_inp.isdigit():
-        print(f"{'⚠️':>5} Некорректное число.")
-        continue
-    n = int(numb_inp)
-
-res = 1
-for el in fact(n):
-    print("-" * 20)
-    print(f"el = {el}")
-    res = res * el
-    print(f"Факториал {el} = {res}")
+if n is not None:
+    for el in fact(n):
+        print("-" * 20)
+        print(f"{el}")

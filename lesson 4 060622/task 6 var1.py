@@ -26,7 +26,7 @@ if start_n is not None and max_count is not None:
     result = []
     for item in count(start_n):
         result.append(item)
-        print(f"{'':>5}{item}")
+        print(f"\t{item}")
         if len(result) == max_count:
             break
 
