@@ -13,7 +13,7 @@ success = False
 
 while not success:
     try:
-        with open(file_name, "r") as file:
+        with open(file_name, "r", encoding="utf-8") as file:
             lines = list(filterfalse(is_senseless_line, file.readlines()))
             staff = {line.split()[0]: float(line.split()[1]) for line in lines}
             # print(staff)

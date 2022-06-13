@@ -16,10 +16,11 @@
 import json
 
 file_name_mask = "file for task 7"
+enc = "utf-8"
 
 try:
-    with open(file_name_mask + " source.txt", "r") as file, \
-            open(file_name_mask + " result.txt", "w+") as file_res:
+    with open(file_name_mask + " source.txt", "r", encoding=enc) as file, \
+            open(file_name_mask + " result.txt", "w+", encoding=enc) as file_res:
         res = []
         lines = file.readlines()
         # составляем словарь с названий фирм и их прибылью

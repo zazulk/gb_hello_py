@@ -8,7 +8,7 @@ import os
 file_name = "file for task 5.txt"
 
 try:
-    with open(file_name, "w+") as file:
+    with open(file_name, "w+", encoding="utf-8") as file:
         numbs = [str(randrange(1, 100)) for n in range(10)]
         file.write(" ".join(numbs))
         file.seek(0)

@@ -41,9 +41,10 @@ def replace_eng_numb_with_rus(text):
 
 
 file_name_mask = "file for task 4"
+enc = "utf-8"
 try:
-    with open(file_name_mask + " source.txt", "r") as file, \
-            open(file_name_mask + " result.txt", "w+") as res_file:
+    with open(file_name_mask + " source.txt", "r", encoding=enc) as file, \
+            open(file_name_mask + " result.txt", "w+", encoding=enc) as res_file:
         for line in file:
             line_with_rus_numb = replace_eng_numb_with_rus(line)
             print(line_with_rus_numb, file=res_file)

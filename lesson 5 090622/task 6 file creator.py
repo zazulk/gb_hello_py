@@ -22,7 +22,7 @@ classes = {
     "Основы безопасности жизнедеятельности (ОБЖ)": ["л", "пр"]
 }
 
-with open("file for task 6 v2.txt", "w+") as file:
+with open("file for task 6 v2.txt", "w+", encoding="utf-8") as file:
     for key, val in classes.items():
         l, pr, lab = None, None, None
         for el in val:

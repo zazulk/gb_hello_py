@@ -5,6 +5,7 @@
 el = None
 lines = []
 ind = 1
+enc = "utf-8"
 
 while el != "":
     el = input("Вводите данные: ").strip()
@@ -16,7 +17,7 @@ while el != "":
 
 while True:
     try:
-        with open(f"file for task 1 v{ind}.txt", "x") as result:
+        with open(f"file for task 1 v{ind}.txt", "x", encoding=enc) as result:
             result.writelines(lines)
         break
     except FileExistsError:
@@ -27,7 +28,7 @@ while True:
         break
 
 try:
-    with open(f"file for task 1 v{ind}.txt", "r") as new_file:
+    with open(f"file for task 1 v{ind}.txt", "r", encoding=enc) as new_file:
         print("-" * 20)
         print(f"Записал в файл \"{new_file.name}\" вот такое:\n")
         content = new_file.read()

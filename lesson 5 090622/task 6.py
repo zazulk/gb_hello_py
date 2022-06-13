@@ -36,7 +36,7 @@ def prepare_classes_with_sum_of_hours(file_name):
     success = False
     while not success:
         try:
-            with open(file_name, "r") as file:
+            with open(file_name, "r", encoding="utf-8") as file:
                 lines = list(filterfalse(is_senseless_line, file.readlines()))
                 classes = {line.split(":")[0].strip(): get_sum_of_hours(line)
                            for line in lines}
