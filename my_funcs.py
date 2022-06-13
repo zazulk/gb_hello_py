@@ -107,3 +107,48 @@ def get_numb_from_user(question, try_limit=None, rand_n_min=None,
             try_count += 1
             continue
     return res_n
+
+
+def has_punctuations(text):
+    """Проверяет, что в переданной строке есть знаки пунктуации
+
+    :param str text:
+    :return bool:
+    """
+    if type(text) is not str:
+        return False
+    punctuations = [",", ".", "!", ":", "?", ";", "\\", "/", "(", ")",
+                    "{", "}", "[", "]"]
+    for letter in list(text):
+        if letter in punctuations:
+            return True
+    return False
+
+
+def has_letters(text):
+    """Проверяет, что в переданной строке есть буквы
+
+    :param str text: переданный текст
+    :return bool:
+    """
+    if type(text) is not str:
+        return False
+    letters = list("abcdefghijklmnopqrstuwyxzабвгдеёжзийклмнопрстуфхцчэюяъь")
+    for letter in list(text):
+        if letter in letters:
+            return True
+    return False
+
+
+def to_pretty_string(item, is_with_tab=True):
+    tab = "\t" if is_with_tab else ""
+    if type(item) is dict:
+        return "".join([f"{tab}{key} : {value}\n" for key, value in item.items()])
+    elif type(item) in [list, tuple, set]:
+        return f"{tab}" + f"\n{tab}".join([str(el) for el in item])
+    else:
+        return item
+
+
+def is_senseless_line(line):
+    return type(line) is not str or line == "\n" or line.startswith("#")
