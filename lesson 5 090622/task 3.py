@@ -7,13 +7,14 @@ from itertools import filterfalse
 from my_funcs import is_stop
 from my_funcs import is_senseless_line
 from my_funcs import to_pretty_string
+from my_funcs import find_path_to_file
 
 file_name = "file for task 3.txt"
 success = False
 
 while not success:
     try:
-        with open(file_name, "r", encoding="utf-8") as file:
+        with open(find_path_to_file(file_name), "r", encoding="utf-8") as file:
             lines = list(filterfalse(is_senseless_line, file.readlines()))
             staff = {line.split()[0]: float(line.split()[1]) for line in lines}
             # print(staff)

@@ -5,11 +5,14 @@
 # Сформировать словарь, содержащий название предмета и общее количество
 # занятий по нему. Вывести его на экран.
 
+# Вариант 1. Ленивый, с заменой конкретных подстрок вида (л) и пр
+
 from itertools import filterfalse
 from my_funcs import is_numb_str
 from my_funcs import is_stop
 from my_funcs import to_pretty_string
 from my_funcs import is_senseless_line
+from my_funcs import find_path_to_file
 
 
 def prepare_classes_with_sum_of_hours(file_name):
@@ -36,7 +39,8 @@ def prepare_classes_with_sum_of_hours(file_name):
     success = False
     while not success:
         try:
-            with open(file_name, "r", encoding="utf-8") as file:
+            with open(find_path_to_file(file_name), "r", encoding="utf-8") \
+                    as file:
                 lines = list(filterfalse(is_senseless_line, file.readlines()))
                 classes = {line.split(":")[0].strip(): get_sum_of_hours(line)
                            for line in lines}
