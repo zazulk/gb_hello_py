@@ -1,4 +1,5 @@
 import random
+import os
 
 
 def is_stop(text):
@@ -152,3 +153,47 @@ def to_pretty_string(item, is_with_tab=True):
 
 def is_senseless_line(line):
     return type(line) is not str or line == "\n" or line.startswith("#")
+
+
+def find_path_to_file(file_name):
+    """Возвращает абсолютный путь к файлу
+    Ищет не по всем файлам, а только в текущей и внешней директории
+
+    :param str file_name: Имя файла с расширением.
+    :return str:
+    """
+    if not file_name or type(file_name) is not str:
+        return None
+    cur_dir_path = os.getcwd()
+    for address, dirs, files in os.walk(cur_dir_path):
+        if files.count(file_name):
+            file_path = os.path.join(address, file_name)
+            return file_path
+    # Если в глубине ничего не нашли, пойдем искать в директории выше
+    outer_dir_path = os.path.dirname(cur_dir_path)
+    for address, dirs, files in os.walk(outer_dir_path):
+        if files.count(file_name):
+            file_path = os.path.join(address, file_name)
+            return file_path
+    return None
+
+
+def get_path_for_new_file(file_name):
+    """Возвращает абсолютный путь к файлу, который нужно создать
+    Если файл с переданным названием, существует, возвращает путь к нему
+
+    :param str file_name: Имя файла для создания.
+    :return str: Абсолютный путь к этому файлу.
+    """
+    if not file_name or type(file_name) is not str:
+        return None
+    existing = find_path_to_file(file_name)
+    if existing:
+        return existing
+    # вычисляем расширение из переданного названия файла
+    file_type = file_name.split(".")[-1] if file_name.count(".") else "txt"
+    cur_dir_path = os.getcwd()
+    for address, dirs, files in os.walk(cur_dir_path):
+        if all([f.endswith(f".{file_type}") for f in files]) or not dirs:
+            return os.path.join(address, file_name)
+    return cur_dir_path
