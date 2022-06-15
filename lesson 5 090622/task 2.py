@@ -21,7 +21,7 @@ while not success:
                 words_count = len([w for w in line if has_letters(w)])
                 print(f"\tколичество слов в строке {i}: {words_count}")
             success = True
-    except FileNotFoundError:
+    except FileNotFoundError or TypeError:
         print(f"❌ Файл \"{file_name}\" не найден.")
         file_name = input(f"\tВведите корректное имя файла или 'Q' для"
                           f" завершения программы: ").strip()

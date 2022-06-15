@@ -23,7 +23,7 @@ try:
         if has_to_delete.lower() in ["да", "lf"]:
             os.remove(file.name)
             print(f"🗑 Файл \"{file_basename}\" удалён.")
-except FileNotFoundError:
+except FileNotFoundError or TypeError:
     print(f"❌ Файл \"{file_name}\" не найден.")
 except IOError:
     print("❌ Произошла ошибка ввода-вывода")

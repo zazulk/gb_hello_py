@@ -53,7 +53,7 @@ try:
             file_res.seek(0)
             print(f"\nВот, что в файле \"{file_res_basename}\":"
                   f"\n{file_res.read()}")
-except FileNotFoundError:
+except FileNotFoundError or TypeError:
     print(f"❌ Некоторые файлы \"{file_name_mask}\" не найдены.")
 except IOError:
     print("❌ Произошла ошибка ввода-вывода")

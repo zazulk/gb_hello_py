@@ -30,7 +30,7 @@ def prepare_classes_with_sum_of_hours(file_name):
                     classes[name] = round(stats_sum, 2)
                 print(to_pretty_string(classes))
                 success = True
-        except FileNotFoundError:
+        except FileNotFoundError or TypeError:
             print(f"❌ Файл \"{file_name}\" не найден.")
             file_name = input(f"\tВведите корректное имя файла или 'Q' для"
                               f" завершения программы: ").strip()

@@ -58,7 +58,7 @@ try:
         print(f"Содержание итогового файла \"{os.path.basename(res_file.name)}"
               f"\":")
         print(content)
-except FileNotFoundError:
+except FileNotFoundError or TypeError:
     print(f"❌ Некоторые файлы \"{file_name_mask}\" не найдены.")
 except IOError:
     print("❌ Произошла ошибка ввода-вывода")

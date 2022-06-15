@@ -25,7 +25,7 @@ while not success:
             medium_salary = sum(staff.values()) / len(staff.keys())
             print(f"Средний доход: {medium_salary:.2f}")
             success = True
-    except FileNotFoundError:
+    except FileNotFoundError or TypeError:
         print(f"❌ Файл \"{file_name}\" не найден.")
         file_name = input(f"\tВведите корректное имя файла или 'Q' для"
                           f" завершения программы: ").strip()
