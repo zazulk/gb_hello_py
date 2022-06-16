@@ -164,13 +164,7 @@ def find_path_to_file(file_name):
     """
     if not file_name or type(file_name) is not str:
         return None
-    cur_dir_path = os.getcwd()
-    for address, dirs, files in os.walk(cur_dir_path):
-        if files.count(file_name):
-            file_path = os.path.join(address, file_name)
-            return file_path
-    # Если в глубине ничего не нашли, пойдем искать в директории выше
-    outer_dir_path = os.path.dirname(cur_dir_path)
+    outer_dir_path = os.path.dirname(os.getcwd())
     for address, dirs, files in os.walk(outer_dir_path):
         if files.count(file_name):
             file_path = os.path.join(address, file_name)
