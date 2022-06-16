@@ -3,6 +3,10 @@
 # телефон. Функция должна принимать параметры как именованные аргументы.
 # Осуществить вывод данных о пользователе одной строкой.
 
+from my_funcs import has_letters
+from my_funcs import has_punctuations
+from my_funcs import is_stop
+
 
 def get_user_info(name, surname, year, city, email, phone):
     """Возвращает словарь, заполненный передаваемой информацией о пользователя.
@@ -47,37 +51,6 @@ def has_empty_values(info):
     return False
 
 
-def has_letters(text):
-    """Проверяет, что в переданной строке есть буквы
-
-    :param str text: переданный текст
-    :return bool:
-    """
-    if type(text) is not str:
-        return False
-    letters = list("abcdefghijklmnopqrstuwyxzабвгдеёжзийклмнопрстуфхцчэюяъь")
-    for letter in list(text):
-        if letter in letters:
-            return True
-    return False
-
-
-def has_punctuations(text):
-    """Проверяет, что в переданной строке есть знаки пунктуации
-
-    :param str text:
-    :return bool:
-    """
-    if type(text) is not str:
-        return False
-    punctuations = [",", ".", "!", ":", "?", ";", "\\", "/", "(", ")",
-                    "{", "}", "[", "]"]
-    for letter in list(text):
-        if letter in punctuations:
-            return True
-    return False
-
-
 def normalize_year(year):
     """Приводит значение года к нормализованному виду.
 
@@ -107,18 +80,6 @@ def remove_end_punctuations(text):
     while text[-1:] in punctuations:
         text = text[:-1]
     return text.strip()
-
-
-def is_stop(text):
-    """Проверяет, является ли текст стоп-словом
-
-    :param str text:
-    :return bool:
-    """
-    if type(text) is not str:
-        return False
-    stop_words = ["q", "й", "стоп", "stop", "cnjg", "флюгегехаймен"]
-    return bool(text in stop_words)
 
 
 stop = False
