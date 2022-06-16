@@ -5,10 +5,10 @@
 # Сформировать словарь, содержащий название предмета и общее количество
 # занятий по нему. Вывести его на экран.
 
-# Вариант 1. Ленивый, с заменой конкретных подстрок вида (л) и пр
+# Вариант 2. С применением подсмотренного на разборе приема выделения чисел из
+# строки с помощью comprehensions
 
 from itertools import filterfalse
-from my_funcs import is_numb_str
 from my_funcs import is_stop
 from my_funcs import to_pretty_string
 from my_funcs import is_senseless_line
@@ -16,34 +16,18 @@ from my_funcs import find_path_to_file
 
 
 def prepare_classes_with_sum_of_hours(file_name):
-    def turn_into_numb(text):
-        """Превращает строчное обозначение часов типа "N(лаб)" в число N.0
-        float - на всякий случай, ведь может указываться не целое значение
-
-        :param str text: строчное обозначение часов типа "N(лаб)"
-        :return float:
-        """
-        res = text.strip().replace("(л)", "").replace("(пр)", "").replace(
-            "(лаб)", "").replace(",", ".")
-        return round(float(res)) if is_numb_str(res) else 0
-
-    def get_sum_of_hours(text):
-        """Считает сумму чисел, извлеченных из строки
-        вида "Предмет: N(л) – N(лаб)"
-
-        :param str text: Строка вида "Предмет: N(л) – N(лаб)".
-        :return float: Сумма извлеченных чисел.
-        """
-        return sum([turn_into_numb(el) for el in text.split(":")[1].split()])
-
     success = False
     while not success:
         try:
             with open(find_path_to_file(file_name), "r", encoding="utf-8") \
                     as file:
                 lines = list(filterfalse(is_senseless_line, file.readlines()))
-                classes = {line.split(":")[0].strip(): get_sum_of_hours(line)
-                           for line in lines}
+                classes = {}
+                for line in lines:
+                    name, stats = line.split(':')
+                    stats_sum = sum(map(int, "".join([i for i in stats if
+                                        i == ' ' or '9' >= i >= '0']).split()))
+                    classes[name] = round(stats_sum, 2)
                 print(to_pretty_string(classes))
                 success = True
         except FileNotFoundError or TypeError:
