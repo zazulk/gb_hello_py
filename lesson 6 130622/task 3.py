@@ -1,3 +1,7 @@
+from random import choice
+from random import randint
+
+
 class Worker:
     def __init__(self, name, surname, position, wage, bonus):
         self.name = name
@@ -15,6 +19,11 @@ class Position(Worker):
         return sum(self._income.values())
 
 
-postman = Position("Вася", "Пупкин", "почтальон", 60000, 5000)
-print(postman.get_full_name())
-print(postman.get_total_income())
+names_m = ["Василий", "Петр", "Захар", "Иван"]
+surnames_m = ["Иванов", "Петров", "Лопатин", "Троян"]
+positions = ["дворник", "оператор цеха", "секретарь", "охранник"]
+
+postman = Position(choice(names_m), choice(surnames_m), choice(positions),
+                   randint(30000, 90000), randint(3000, 10000))
+print(f"Знакомьтесь - {postman.get_full_name()}! Доход в месяц: "
+      f"{postman.get_total_income()}руб.")

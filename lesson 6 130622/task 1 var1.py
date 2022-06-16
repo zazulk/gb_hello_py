@@ -1,4 +1,5 @@
 import time
+from random import randint
 
 
 class TrafficLight:
@@ -12,7 +13,7 @@ class TrafficLight:
             "txt_color": "\033[33m🟡"
         },
         "green": {
-            "pause": 4,
+            "pause": randint(4, 7),
             "txt_color": "\033[32m🟢"
         },
     }
@@ -24,11 +25,11 @@ class TrafficLight:
         result = 0
         while result <= limit_secs:
             for key, value in self.__colors.items():
-                time.sleep(value.get("pause"))
                 print(f"{value.get('txt_color')} {key}")
+                time.sleep(value.get("pause"))
                 result = time.monotonic() - start
 
 
 traffic_lighter = TrafficLight()
-traffic_lighter.running(20)
+traffic_lighter.running(randint(20, 50))
 
