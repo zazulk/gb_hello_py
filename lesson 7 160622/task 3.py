@@ -77,13 +77,24 @@ def generate_cells(numb_of_cells):
         for el in ["add", "mul", "sub", "div"]:
             rand_ind = randrange(len(cells))
             if el == "add":
-                print(f"Складываем клетку {ind} с клеткой {rand_ind}: {item + cells[rand_ind]}")
+                try:
+                    print(f"Складываем клетку {ind} с клеткой {rand_ind}: {item + cells[rand_ind]}")
+                except Exception as err:
+                    print(err)
             if el == "mul":
-                print(f"Вычитаем из клетки {ind} клетку {rand_ind}: {item - cells[rand_ind]}")
+                try:
+                    print(f"Вычитаем из клетки {ind} клетку {rand_ind}: {item - cells[rand_ind]}")
+                except Exception as err:
+                    print(err)
             if el == "mul":
-                print(f"Умножаем клетку {ind} на клетку {rand_ind}: {item * cells[rand_ind]}")
+                try:
+                    print(f"Умножаем клетку {ind} на клетку {rand_ind}: {item * cells[rand_ind]}")
+                except Exception as err:
+                    print(err)
             elif el == "div":
-                print(f"Делим клетку {ind} на клетку {rand_ind}: {item / cells[rand_ind]}")
-
+                try:
+                    print(f"Делим клетку {ind} на клетку {rand_ind}: {item / cells[rand_ind]}")
+                except Exception as err:
+                    print(err)
 
 generate_cells(randint(5, 10))
