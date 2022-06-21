@@ -5,21 +5,24 @@ from random import choice
 
 
 class CellException(Exception):
-    def __init__(self, message=None, value=None):
-        self.message = message
+    def __init__(self, msg=None, value=None):
+        self.msg = msg
         self.value = value
-        if message and not value:
-            super().__init__(f"⛔️ {message}")
+        if msg and not value:
+            super().__init__(f"⛔️ {msg}")
 
     def __str__(self):
+        val = f"⛔ Некорректное значение {self.value}."
         if not isinstance(self.value, int):
-            return "⛔️ Количество ячеек должно быть целым положительным числом."
+            return f"{val} Количество ячеек должно быть целым положительным " \
+                   f"числом."
         elif self.value < 0:
-            return "⛔️ Невозможно создать клетку с отрицательным числом ячеек."
+            return f"{val}️ Невозможно создать клетку с отрицательным числом " \
+                   f"ячеек."
         elif self.value == 0:
-            return "⛔️ Невозможно создать клетку без ячеек."
+            return f"{val}️ Невозможно создать клетку без ячеек."
         else:
-            return "⛔️ Что-то не так"
+            return f"{val}️ Что-то не так"
 
 
 class Cell:
@@ -38,7 +41,7 @@ class Cell:
         if sub_res > 0:
             return Cell(sub_res)
         else:
-            raise CellException(sub_res)
+            raise CellException(value=sub_res)
 
     def __mul__(self, other):
         return Cell(self.amount * other.amount)
@@ -48,53 +51,60 @@ class Cell:
         if div_res > 0:
             return Cell(div_res)
         else:
-            raise CellException(div_res)
+            raise CellException(value=div_res)
+
+    def __floordiv__(self, other):
+        return self.__truediv__(other)
 
     def __str__(self):
         return f"{'▫️' * self.amount}"
 
     def make_order(self, n):
         if not isinstance(n, int) or n <= 0:
-            print("⛔️ Количество ячеек в ряду должно быть целым положительным "
-                  "числом.")
-        full_rows_numb = self.amount // n
-        last_row_numb = self.amount % n
-        one_raw = '▫️' * n + '\n'
-        return f"{one_raw * full_rows_numb}{'▫️' * last_row_numb}"
+            return "⛔️ Количество ячеек в ряду должно быть целым " \
+                   "положительным числом."
+        if self.amount < n:
+            return '▫️' * self.amount
+        return '\n'.join(
+            ['▫️' * n for _ in range(self.amount // n)]) + '\n' + '▫️' * (
+                    self.amount % n)
 
 
 def generate_cells(numb_of_cells):
     cells = []
     for i in range(1, numb_of_cells + 1):
-        # new_cell = Cell(choice([randint(-1, 30), uniform(2.0, 5.0)]))
-        new_cell = Cell(randint(-1, 30))
-        cells.append(new_cell)
-        print(f"{i}) {new_cell}")
-        rand_count = randint(1, 15)
-        print(f"Выводим по {rand_count} в ряду:\n{new_cell.make_order(rand_count)}\n")
-
+        print(f"{i}) ", end="")
+        try:
+            new_cell = Cell(choice([randint(1, 10), randint(1, 10),
+                                    choice([randint(-1, 0), uniform(2.0, 5.0)])]
+                                   ))
+            cells.append(new_cell)
+            print(f"{new_cell}")
+            rand_count = randint(-1, 11)
+            print(f"Выводим по {rand_count} в ряду:\n"
+                  f"{new_cell.make_order(rand_count)}")
+        except Exception as err:
+            print(err)
+    print("-" * 30)
     for ind, item in enumerate(cells, 1):
-        for el in ["add", "mul", "sub", "div"]:
+        for el in ["+", "*", "-", "//", "/"]:
             rand_ind = randrange(len(cells))
-            if el == "add":
-                try:
-                    print(f"Складываем клетку {ind} с клеткой {rand_ind}: {item + cells[rand_ind]}")
-                except Exception as err:
-                    print(err)
-            if el == "mul":
-                try:
-                    print(f"Вычитаем из клетки {ind} клетку {rand_ind}: {item - cells[rand_ind]}")
-                except Exception as err:
-                    print(err)
-            if el == "mul":
-                try:
-                    print(f"Умножаем клетку {ind} на клетку {rand_ind}: {item * cells[rand_ind]}")
-                except Exception as err:
-                    print(err)
-            elif el == "div":
-                try:
-                    print(f"Делим клетку {ind} на клетку {rand_ind}: {item / cells[rand_ind]}")
-                except Exception as err:
-                    print(err)
+            start_txt = f"Клетка {ind} ({item.amount}) $$ клетка {rand_ind} " \
+                        f"({cells[rand_ind].amount}) = "
+            print(f"{start_txt.replace('$$', el)} ", end="")
+            try:
+                if el == "+":
+                    print(f"{(item + cells[rand_ind]).amount}")
+                if el == "*":
+                    print(f"{(item * cells[rand_ind]).amount}")
+                if el == "-":
+                    print(f"{(item - cells[rand_ind]).amount}")
+                if el == "//":
+                    print(f"{(item // cells[rand_ind]).amount}")
+                if el == "/":
+                    print(f"{(item / cells[rand_ind]).amount}")
+            except Exception as err:
+                print(err)
 
-generate_cells(randint(5, 10))
+
+generate_cells(randint(3, 10))

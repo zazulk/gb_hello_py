@@ -1,54 +1,73 @@
 from abc import ABC, abstractmethod
 from random import uniform
+from random import randint
+from random import choice
+from itertools import chain
 
 
 class Clothing(ABC):
-    name = "Одежда"
 
-    @property
+    def __init__(self, name, param):
+        if type(name) is not str or type(param) not in [int, float]:
+            raise ValueError(name, param)
+        self.name = name
+        self.param = param
+
     @abstractmethod
     def tissue_amount(self):
         pass
 
-
-class Coat:
-    def __init__(self, name, v):
-        if type(name) is not str or type(v) not in [int, float]:
-            raise ValueError(name, v)
-        self.name = name
-        self.v = v
-
-    @property
-    def tissue_amount(self):
-        return round(self.v / 6.5 + 0.5)
-
     def __str__(self):
-        return f"Пальто \"{self.name}\"\n\tразмер: {self.v}\n\tрасход ткани: " \
+        return f"name:{self.name}\n\tparam: {self.param}\n\ttissue_amount: " \
                f"{self.tissue_amount}"
 
 
-class Costume:
-    def __init__(self, name, h):
-        if type(name) is not str or type(h) not in [int, float]:
-            raise ValueError(name, h)
-        self.name = name
-        self.h = h
+class Coat(Clothing):
 
     @property
     def tissue_amount(self):
-        return round(2 * self.h + 0.3, 2)
+        return round(self.param / 6.5 + 0.5, 2)
 
     def __str__(self):
-        return f"Костюм \"{self.name}\"\n\tрост: {self.h}\n\tрасход ткани: " \
-               f"{self.tissue_amount}"
+        return f"🧥Пальто \"{self.name}\"\n\tразмер: {self.param}\n\t" \
+               f"расход ткани: {self.tissue_amount}"
 
 
-# uniform(1.3, 2.3)
+class Costume(Clothing):
 
-new_costume = Costume("Двойка", 1.69)
-new_coat = Coat("Пальте", 44)
-print(new_costume)
-print(new_coat)
+    def __init__(self, name, param):
+        if type(param) is not float:
+            param = param / 100
+        super().__init__(name, param)
 
-# ["Редингот", "Шинель", "Реглан", "Кейп"]
-# ["Тройка", "Двойка"]
+
+    @property
+    def tissue_amount(self):
+        return round(2 * self.param + 0.3, 2)
+
+    def __str__(self):
+        return f"🥼Костюм \"{self.name}\"\n\tрост: {self.param}\n\tрасход " \
+               f"ткани: {self.tissue_amount}"
+
+
+def produce_clothes():
+    coat_names = ["Редингот", "Шинель", "Реглан", "Кейп"]
+    costume_names = ["Тройка", "Двойка"]
+
+    new_costumes = [Costume(costume_name, choice([round(uniform(1.3, 2.3), 2),
+                                                  randint(145, 230)])) for
+                    costume_name in
+                    costume_names[:randint(1, len(costume_names))]]
+    new_coats = [Coat(coat_name, randint(40, 58)) for coat_name in
+                 coat_names[:randint(1, len(coat_names))]]
+
+    new_clothes = list(chain(new_costumes, new_coats))
+
+    print(f"Пошил вот:\n")
+    for clothing in new_clothes:
+        print(clothing)
+
+    print(f"\nЗатратил {sum([el.tissue_amount for el in new_clothes])}м ткани.")
+
+
+produce_clothes()
