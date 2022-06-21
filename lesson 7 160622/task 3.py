@@ -89,7 +89,7 @@ def generate_cells(numb_of_cells):
     for ind, item in enumerate(cells, 1):
         for el in ["+", "*", "-", "//", "/"]:
             rand_ind = randrange(len(cells))
-            start_txt = f"Клетка {ind} ({item.amount}) $$ клетка {rand_ind} " \
+            start_txt = f"Клетка_{ind} ({item.amount}) $$ клетка_{rand_ind} " \
                         f"({cells[rand_ind].amount}) = "
             print(f"{start_txt.replace('$$', el)} ", end="")
             try:
