@@ -1,31 +1,43 @@
+from itertools import zip_longest
+from random import randint
+
+
 class Matrix:
+    matrix_store = []
+
+    @staticmethod
+    def show_matrix_store():
+        return f"\n{'-'*30}\n".join([f"\033[1m{i})\033[0m\n"
+                                     f"{Matrix.__str__(val)}" for i, val in
+                                     enumerate(Matrix.matrix_store, 1)])
 
     def __init__(self, list_of_lists):
-        self.matrix = list_of_lists.copy()
+        self.matrix = list_of_lists
+        Matrix.matrix_store.append(self)
 
     def __str__(self):
-        res = ""
-        for lst in self.matrix:
-            res += " ".join([str(i) for i in lst]) + "\n"
-        return res
+        return "\033[32m" + "\n".join(["\t\t".join([str(i) for i in lst]) for
+                                       lst in self.matrix]) + "\033[0m"
 
     def __add__(self, other):
-        res = []
-        for index in range(len(self.matrix)):
-            r1 = []
-            for i in range(len(self.matrix[index])):
-                r1.append(self.matrix[index][i] + other.matrix[index][i])
-            res.append(r1)
-        return Matrix(res)
+        new_m = zip_longest(self.matrix, other.matrix, fillvalue=[])
+        return Matrix([map(sum, zip_longest(*m, fillvalue=0)) for m in new_m])
+
+    def __radd__(self, other):
+        if other == 0:
+            return self
+        else:
+            return self.__add__(other)
 
 
-new_matrix = Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-new_matrix_2 = Matrix([[2, 3, 4], [5, 6, 7], [8, 9, 10]])
-new_matrix_3 = Matrix([[3, 4, 5], [6, 7, 8], [9, 10, 11]])
+for rand in range(randint(2, 4)):
+    Matrix([[randint(-20, 20) for r_1 in range(randint(2, 4))] for r_2 in
+            range(randint(2, 4))])
 
-print(new_matrix)
-print(new_matrix_2)
-print(new_matrix_3)
-
-print(new_matrix + new_matrix_2 + new_matrix_3)
-
+print(Matrix.show_matrix_store())
+print("-" * 30)
+print("\033[35mСумма всех матриц:")
+try:
+    print(f"{sum([*Matrix.matrix_store])}")
+except Exception as err:
+    print(err)
