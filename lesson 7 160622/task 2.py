@@ -40,7 +40,6 @@ class Costume(Clothing):
             param = param / 100
         super().__init__(name, param)
 
-
     @property
     def tissue_amount(self):
         return round(2 * self.param + 0.3, 2)
